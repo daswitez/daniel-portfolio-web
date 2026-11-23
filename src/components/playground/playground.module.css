@@ -1,0 +1,156 @@
+/*
+ * The playground: warm paper, a dot grid, sticker colours and big type.
+ * Deliberately different from the quiet, Apple-grey desk above it.
+ */
+.zone {
+  --paper: light-dark(#fbf5ec, #141312);
+  --paper-ink: light-dark(#1d1d1f, #f5f1ea);
+  --paper-muted: light-dark(#6f6a62, #a39d93);
+  --dot: light-dark(rgba(29, 29, 31, 0.09), rgba(255, 255, 255, 0.07));
+  --pink: #ff5fa2;
+  --yellow: #ffd60a;
+  --green: #30d158;
+  --purple: #bf5af2;
+  --orange: #ff9f0a;
+  --blue: #2997ff;
+  --sticker-shadow: 0 10px 0 -2px
+    light-dark(rgba(29, 29, 31, 0.12), rgba(0, 0, 0, 0.4));
+
+  position: relative;
+  overflow: clip;
+  background-color: var(--paper);
+  background-image: radial-gradient(var(--dot) 1.2px, transparent 1.2px);
+  background-size: 22px 22px;
+  color: var(--paper-ink);
+  cursor:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='28' viewBox='0 0 28 28'%3E%3Ccircle cx='14' cy='14' r='9' fill='%23ffd60a' stroke='%231d1d1f' stroke-width='2.5'/%3E%3C/svg%3E")
+      14 14,
+    crosshair;
+}
+
+/* ---------- doodles ---------- */
+.doodles {
+  position: absolute;
+  inset: 0;
+  z-index: 20;
+  pointer-events: none;
+}
+
+.doodle {
+  position: absolute;
+  translate: -50% -50%;
+  filter: drop-shadow(0 6px 0 rgba(0, 0, 0, 0.12));
+}
+
+.doodle svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.toast {
+  position: fixed;
+  left: 50%;
+  bottom: 110px;
+  z-index: 850;
+  margin: 0;
+  padding: 12px 20px;
+  border: 2.5px solid #1d1d1f;
+  border-radius: 999px;
+  background: var(--yellow);
+  box-shadow: 0 6px 0 #1d1d1f;
+  color: #1d1d1f;
+  font-weight: 700;
+  pointer-events: none;
+  translate: -50% 20px;
+  opacity: 0;
+  transition:
+    opacity 0.25s var(--ease),
+    translate 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.toast[data-visible="true"] {
+  opacity: 1;
+  translate: -50% 0;
+}
+
+/* ---------- shared chapter type ---------- */
+.chapter {
+  position: relative;
+  padding: clamp(88px, 11vw, 150px) max(5vw, 20px);
+}
+
+.inner {
+  max-width: 1160px;
+  margin: 0 auto;
+}
+
+/* A label that looks like a little sticker. */
+.eyebrow {
+  display: inline-block;
+  margin: 0 0 20px;
+  padding: 6px 14px;
+  border: 2px solid var(--paper-ink);
+  border-radius: 999px;
+  background: var(--yellow);
+  color: #1d1d1f;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  rotate: -2deg;
+  box-shadow: 0 4px 0 var(--paper-ink);
+}
+
+.title {
+  margin: 0;
+  font-size: clamp(42px, 7vw, 96px);
+  font-weight: 800;
+  line-height: 0.96;
+  letter-spacing: -0.05em;
+  text-wrap: balance;
+}
+
+.body {
+  max-width: 44ch;
+  margin: 20px 0 0;
+  color: var(--paper-muted);
+  font-size: clamp(17px, 1.6vw, 21px);
+  line-height: 1.5;
+  text-wrap: pretty;
+}
+
+/* Chunky "sticker" button used across the playground. */
+.button {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 48px;
+  padding: 12px 22px;
+  border: 2.5px solid #1d1d1f;
+  border-radius: 999px;
+  background: var(--blue);
+  box-shadow: 0 5px 0 #1d1d1f;
+  color: #fff;
+  font-size: 16px;
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+  transition:
+    translate 0.12s var(--ease),
+    box-shadow 0.12s var(--ease);
+}
+
+.button:hover {
+  translate: 0 -2px;
+  box-shadow: 0 7px 0 #1d1d1f;
+}
+
+.button:active {
+  translate: 0 4px;
+  box-shadow: 0 1px 0 #1d1d1f;
+}
+
+.buttonAlt {
+  background: #fff;
+  color: #1d1d1f;
+}

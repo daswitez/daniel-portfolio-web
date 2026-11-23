@@ -1,0 +1,139 @@
+@import "../styles/tokens.css";
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  min-width: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  /* menubar + the dock while it's docked at the top as a nav */
+  scroll-padding-top: 104px;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font: 16px/1.55 var(--font-sans);
+  letter-spacing: -0.011em;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: clip;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+}
+
+a {
+  color: var(--accent-ink);
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* Frosted-glass surface shared by menubar, dock, widgets and the app launcher. */
+.glass {
+  background: var(--glass);
+  backdrop-filter: blur(30px) saturate(1.8);
+  -webkit-backdrop-filter: blur(30px) saturate(1.8);
+  box-shadow: var(--shadow-widget);
+}
+
+/*
+ * Liquid glass: translucent body + bright specular rim on top + softer refracted
+ * rim at the bottom + a sheen that bends light across the upper half.
+ */
+.liquid-glass {
+  position: relative;
+  isolation: isolate;
+  background: linear-gradient(180deg, var(--lg-top), var(--lg-bottom));
+  backdrop-filter: blur(24px) saturate(1.9) brightness(1.04);
+  -webkit-backdrop-filter: blur(24px) saturate(1.9) brightness(1.04);
+  box-shadow:
+    inset 0 1px 0 var(--lg-rim),
+    inset 0 -1px 1px var(--lg-rim-soft),
+    inset 0 0 0 0.5px var(--lg-rim-soft),
+    0 0 0 0.5px var(--lg-outline),
+    var(--lg-shadow);
+}
+
+.liquid-glass::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  background: radial-gradient(
+    120% 90% at 50% -30%,
+    var(--lg-sheen),
+    transparent 62%
+  );
+  pointer-events: none;
+}
+
+@media (prefers-reduced-transparency: reduce) {
+  .glass,
+  .liquid-glass {
+    background: var(--surface);
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+}
+
+/* Folder icon fills (used by inline SVGs). */
+.folder-body {
+  fill: var(--folder);
+}
+
+.folder-tab {
+  fill: var(--folder-tab);
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+/*
+ * Desktop items the visitor can move around (widgets, folders, the app panel).
+ * The drag hook writes --drag-x/--drag-y; lifting while held reads as "picked up".
+ */
+.desk-item {
+  translate: var(--drag-x, 0) var(--drag-y, 0);
+  user-select: none;
+  -webkit-user-select: none;
+  transition: scale 0.18s var(--ease);
+}
+
+.desk-item * {
+  -webkit-user-drag: none;
+}
+
+.desk-item[data-dragging] {
+  scale: 1.03;
+  cursor: grabbing;
+}

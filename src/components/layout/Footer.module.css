@@ -1,0 +1,7 @@
+.footer {
+  padding: 32px max(5vw, 20px) 120px;
+  border-top: 0.5px solid var(--line);
+  color: var(--muted);
+  font-size: 12px;
+  text-align: center;
+}

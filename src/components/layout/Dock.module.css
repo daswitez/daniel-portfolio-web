@@ -1,0 +1,181 @@
+/*
+ * Full-viewport, click-through layer. The dock's resting place is decided purely
+ * by flex alignment; Motion's layout animation interpolates between the two.
+ */
+.layer {
+  position: fixed;
+  inset: 0;
+  z-index: 800;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  padding: calc(var(--menubar-height) + 10px) 12px 14px;
+  pointer-events: none;
+}
+
+.layer[data-placement="top"] {
+  justify-content: flex-start;
+}
+
+.dock {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  padding: 6px;
+  pointer-events: auto;
+}
+
+[data-placement="top"] .dock {
+  padding: 5px;
+}
+
+.item {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px;
+  color: var(--ink);
+  text-decoration: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+[data-placement="top"] .item {
+  padding: 5px 12px 5px 6px;
+}
+
+/* The liquid "lens" that slides to the active item. */
+.lens {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: var(--lg-lens);
+  box-shadow:
+    inset 0 1px 0 var(--lg-rim),
+    inset 0 -0.5px 0 var(--lg-rim-soft),
+    0 0 0 0.5px var(--lg-outline),
+    0 4px 12px -4px rgba(0, 0, 0, 0.18);
+}
+
+.icon {
+  display: block;
+  width: 46px;
+  height: 46px;
+  flex: none;
+  transition: translate 0.2s var(--ease);
+}
+
+[data-placement="top"] .icon {
+  width: 24px;
+  height: 24px;
+}
+
+.icon svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  filter: drop-shadow(0 1px 1.5px rgba(0, 0, 0, 0.18));
+}
+
+/* Dock hover: the icon lifts toward the cursor (only on real pointers). */
+@media (hover: hover) and (pointer: fine) {
+  [data-placement="bottom"] .item:hover .icon {
+    translate: 0 -4px;
+  }
+}
+
+/* Instant press feedback (on pointer-down, not release). */
+.item:active .icon {
+  scale: 0.92;
+  transition: scale 0.1s var(--ease);
+}
+
+/* macOS "running app" dot under the active icon while docked at the bottom. */
+[data-placement="bottom"] .active::after {
+  content: "";
+  position: absolute;
+  bottom: -3px;
+  left: 50%;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--ink) 70%, transparent);
+  translate: -50% 0;
+}
+
+.label {
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+}
+
+.active .label {
+  color: var(--ink);
+}
+
+.item:not(.active) .label {
+  color: color-mix(in srgb, var(--ink) 72%, transparent);
+}
+
+.tooltip {
+  position: absolute;
+  bottom: calc(100% + 12px);
+  left: 50%;
+  padding: 4px 10px;
+  border-radius: 8px;
+  background: var(--glass);
+  backdrop-filter: blur(20px) saturate(1.8);
+  -webkit-backdrop-filter: blur(20px) saturate(1.8);
+  box-shadow: var(--shadow-widget);
+  color: var(--ink);
+  font-size: 12px;
+  font-weight: 500;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transform: translate(-50%, 4px);
+  transition:
+    opacity 0.15s var(--ease),
+    transform 0.15s var(--ease);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .item:hover .tooltip {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+}
+
+.item:focus-visible .tooltip {
+  opacity: 1;
+  transform: translate(-50%, 0);
+}
+
+@media (max-width: 900px) {
+  .icon {
+    width: 40px;
+    height: 40px;
+  }
+
+  .tooltip {
+    display: none;
+  }
+}
+
+/* Phones: the top bar keeps icons only so all six fit. */
+@media (max-width: 640px) {
+  [data-placement="top"] .item {
+    padding: 5px;
+  }
+
+  [data-placement="top"] .icon {
+    width: 28px;
+    height: 28px;
+  }
+
+  .label {
+    display: none;
+  }
+}

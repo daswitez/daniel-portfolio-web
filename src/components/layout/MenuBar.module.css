@@ -1,0 +1,150 @@
+.menubar {
+  position: fixed;
+  inset: 0 0 auto;
+  z-index: 900;
+  height: var(--menubar-height);
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 0 10px 0 16px;
+  font-size: 13px;
+  box-shadow: 0 0.5px 0 var(--line);
+}
+
+.menubar b {
+  font-weight: 600;
+}
+
+.monogram {
+  display: inline-grid;
+  place-items: center;
+  width: 20px;
+  height: 20px;
+  border-radius: 6px;
+  background: var(--ink);
+  color: var(--bg);
+  font-size: 9.5px;
+  font-weight: 700;
+}
+
+.role {
+  color: var(--muted);
+}
+
+.right {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  white-space: nowrap;
+}
+
+.themeToggle {
+  width: 30px;
+  height: 26px;
+  display: grid;
+  place-items: center;
+  border: 0;
+  border-radius: 7px;
+  background: none;
+}
+
+.themeToggle:hover {
+  background: var(--line);
+}
+
+.themeToggle svg {
+  width: 16px;
+  height: 16px;
+}
+
+.moon {
+  display: none;
+}
+
+:global(:root[data-theme="dark"]) .moon {
+  display: block;
+}
+
+:global(:root[data-theme="dark"]) .sun {
+  display: none;
+}
+
+@media (max-width: 900px) {
+  .role,
+  .availability {
+    display: none;
+  }
+}
+
+/* ---------- language menu (native popover, anchored under the menubar's right edge) ---------- */
+.languageMenu {
+  position: fixed;
+  inset: auto;
+  top: calc(var(--menubar-height) + 6px);
+  right: 10px;
+  min-width: 180px;
+  margin: 0;
+  padding: 5px;
+  border: 0;
+  border-radius: 12px;
+  color: var(--ink);
+  font-size: 13px;
+  /* Materialize from the button: quick scale + fade, origin at the top-right. */
+  transform-origin: top right;
+  opacity: 0;
+  scale: 0.96;
+  transition:
+    opacity 0.14s var(--ease),
+    scale 0.14s var(--ease),
+    display 0.14s allow-discrete,
+    overlay 0.14s allow-discrete;
+}
+
+.languageMenu:popover-open {
+  opacity: 1;
+  scale: 1;
+}
+
+@starting-style {
+  .languageMenu:popover-open {
+    opacity: 0;
+    scale: 0.96;
+  }
+}
+
+.languageOption {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 10px 6px 8px;
+  border: 0;
+  border-radius: 7px;
+  background: none;
+  text-align: left;
+}
+
+.languageOption:hover,
+.languageOption:focus-visible {
+  background: var(--accent);
+  color: #fff;
+  outline: none;
+}
+
+.languageCheck {
+  width: 12px;
+  height: 12px;
+  flex: none;
+  visibility: hidden;
+}
+
+.languageOption[aria-checked="true"] .languageCheck {
+  visibility: visible;
+}
+
+.languageCode {
+  margin-left: auto;
+  font-size: 11px;
+  opacity: 0.55;
+}

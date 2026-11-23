@@ -1,0 +1,258 @@
+.desk {
+  position: relative;
+  height: 100vh;
+  height: 100svh;
+  min-height: 700px;
+  overflow: hidden;
+  background: var(--desk);
+  border-bottom: 0.5px solid var(--line);
+}
+
+/* ---------- hero ---------- */
+.hero {
+  position: absolute;
+  left: 360px;
+  right: 250px;
+  top: 50%;
+  transform: translateY(-60%);
+  text-align: center;
+  pointer-events: none;
+}
+
+.hero h1 {
+  margin: 0;
+  font-size: clamp(40px, 4.6vw, 72px);
+  font-weight: 700;
+  line-height: 1.04;
+  letter-spacing: -0.04em;
+  text-wrap: balance;
+}
+
+.hero p {
+  max-width: 520px;
+  margin: 18px auto 0;
+  color: var(--muted);
+  font-size: clamp(17px, 1.5vw, 21px);
+  line-height: 1.4;
+  text-wrap: balance;
+}
+
+.heroActions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 26px;
+  pointer-events: auto;
+}
+
+.pill {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 11px 22px;
+  border: 0;
+  border-radius: 999px;
+  background: var(--accent);
+  color: #fff;
+  font-size: 15px;
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.textLink {
+  padding: 10px 4px;
+  border: 0;
+  background: none;
+  color: var(--accent-ink);
+  font-size: 15px;
+}
+
+.textLink:hover {
+  text-decoration: underline;
+}
+
+.hero .shortcutHint {
+  margin-top: 16px;
+  color: var(--muted);
+  font-size: 12.5px;
+}
+
+.shortcutHint kbd {
+  display: inline-block;
+  min-width: 20px;
+  margin: 0 2px;
+  padding: 1px 5px;
+  border-radius: 5px;
+  background: var(--surface);
+  box-shadow:
+    inset 0 -1px 0 var(--line),
+    0 0 0 0.5px var(--line);
+  color: var(--ink);
+  font: 500 11.5px/1.5 var(--font-sans);
+  text-align: center;
+}
+
+.cmdGlyph {
+  font-size: 13px;
+  line-height: 1;
+}
+
+.shortcutHint .plus {
+  margin: 0 1px;
+  color: var(--muted);
+}
+
+/* No keyboard on touch devices, so no shortcut hint. */
+@media (hover: none) and (pointer: coarse) {
+  .hero .shortcutHint {
+    display: none;
+  }
+}
+
+/* ---------- folder icons ---------- */
+.icons {
+  position: absolute;
+  right: 20px;
+  top: 46px;
+  display: grid;
+  grid-template-columns: repeat(2, 96px);
+  gap: 4px 6px;
+}
+
+.icon {
+  width: 96px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 8px 4px;
+  border: 0;
+  border-radius: 10px;
+  background: none;
+  font-size: 12.5px;
+  font-weight: 500;
+}
+
+.icon svg {
+  width: 60px;
+  height: 50px;
+}
+
+.icon:hover {
+  background: var(--line);
+}
+
+.icon span {
+  padding: 1px 6px;
+  border-radius: 5px;
+}
+
+.selected span {
+  background: var(--accent);
+  color: #fff;
+}
+
+/* ---------- app launcher ---------- */
+.apps {
+  position: absolute;
+  right: 24px;
+  bottom: 112px;
+  display: grid;
+  grid-template-columns: repeat(3, 56px);
+  gap: 14px 16px;
+  padding: 16px;
+  border-radius: 22px;
+}
+
+.app {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--ink);
+  font-size: 11px;
+  text-decoration: none;
+}
+
+.app svg {
+  display: block;
+  width: 52px;
+  height: 52px;
+  transition: transform 0.18s var(--ease);
+}
+
+.app:hover svg {
+  transform: scale(1.07);
+}
+
+@media (max-width: 900px) {
+  .desk {
+    height: auto;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+    padding: 52px 14px 40px;
+  }
+
+  .hero {
+    position: static;
+    order: -1;
+    padding: 22px 4px 4px;
+    transform: none;
+  }
+
+  .icons {
+    position: static;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .apps {
+    position: static;
+    margin: 0 auto;
+  }
+}
+
+/* ---------- zoom-out into a laptop (animated by DeskZoom) ---------- */
+.heroSection {
+  position: relative;
+}
+
+.desk {
+  transform-origin: 50% 50%;
+}
+
+/* Sits just under the shrunken screen: 50% + 74% of the desk height / 2 + the bezel. */
+.laptopBase {
+  position: absolute;
+  left: 50%;
+  top: calc(50% + 37% + 12px);
+  width: calc(74% + 140px);
+  height: 18px;
+  translate: -50% 0;
+  border-radius: 2px 2px 18px 18px;
+  background: linear-gradient(180deg, #d9d9de 0%, #b8b8be 55%, #8e8e93 100%);
+  box-shadow: 0 18px 30px -12px rgba(0, 0, 0, 0.35);
+  visibility: hidden;
+  pointer-events: none;
+}
+
+/* The finger notch on the front edge of a MacBook. */
+.laptopBase::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 0;
+  width: 120px;
+  height: 7px;
+  translate: -50% 0;
+  border-radius: 0 0 10px 10px;
+  background: rgba(0, 0, 0, 0.18);
+}

@@ -1,0 +1,313 @@
+/*
+ * Content blocks shared by Finder windows and page sections.
+ * Page sections set data-surface="page" (larger type) and data-tone="alt"
+ * (grey background → flat cards) on their wrapper.
+ */
+
+/* ---------- experience ---------- */
+.job {
+  display: grid;
+  grid-template-columns: 130px 1fr;
+  gap: 20px;
+  padding: 20px 0;
+  border-top: 0.5px solid var(--line);
+}
+
+.job h3 {
+  margin: 0;
+  font-size: 17px;
+  font-weight: 600;
+}
+
+.job ul {
+  margin: 0;
+  padding-left: 18px;
+  font-size: 15px;
+}
+
+.job li {
+  margin: 3px 0;
+}
+
+.period {
+  font: 500 12.5px/1.7 var(--font-mono);
+  color: var(--muted);
+}
+
+.company {
+  margin: 2px 0 8px;
+  color: var(--muted);
+  font-size: 15px;
+}
+
+.company a {
+  color: inherit;
+  text-decoration-color: var(--line);
+  text-underline-offset: 3px;
+}
+
+.company a:hover {
+  color: var(--accent-ink);
+}
+
+.jobDescription {
+  max-width: 62ch;
+  margin: 0 0 12px;
+  font-size: 15px;
+  line-height: 1.55;
+}
+
+/* Highest-hierarchy role: its own surface, bigger title. */
+.featuredJob {
+  margin-bottom: 8px;
+  padding: 24px;
+  border-top: 0;
+  border-radius: 22px;
+  background: var(--surface);
+  box-shadow: var(--shadow-widget);
+}
+
+.featuredJob h3 {
+  font-size: 22px;
+  letter-spacing: -0.02em;
+}
+
+.featuredBadge {
+  display: block;
+  width: fit-content;
+  margin-bottom: 6px;
+  padding: 3px 8px;
+  border-radius: 999px;
+  background: var(--accent);
+  color: #fff;
+  font: 600 10.5px/1.4 var(--font-sans);
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+:global([data-surface="page"]) .job {
+  padding: 28px 0;
+}
+
+:global([data-surface="page"]) .job h3 {
+  font-size: 21px;
+}
+
+:global([data-surface="page"]) .jobDescription {
+  font-size: 17px;
+}
+
+:global([data-surface="page"]) .featuredJob {
+  padding: 36px;
+}
+
+:global([data-surface="page"]) .featuredJob h3 {
+  font-size: clamp(24px, 2.6vw, 30px);
+}
+
+:global([data-tone="alt"]) .featuredJob {
+  box-shadow: none;
+}
+
+/* ---------- projects ---------- */
+.projectGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+  gap: 16px;
+}
+
+.projectCard {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border-radius: 18px;
+  background: var(--surface);
+  color: inherit;
+  text-decoration: none;
+  box-shadow: var(--shadow-widget);
+  transition: transform 0.2s var(--ease);
+}
+
+.projectCard:hover {
+  transform: translateY(-3px);
+}
+
+.cover {
+  position: relative;
+  height: 150px;
+  overflow: hidden;
+}
+
+.cover b {
+  position: absolute;
+  right: -6px;
+  bottom: -34px;
+  font-size: 140px;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.06em;
+  color: #fff;
+}
+
+.coverImage {
+  object-fit: cover;
+  object-position: top center;
+}
+
+/* Cards can be <button>s (they open Safari): reset button chrome. */
+button.projectCard {
+  width: 100%;
+  padding: 0;
+  border: 0;
+  font: inherit;
+  color: inherit;
+  text-align: left;
+}
+
+.projectInfo {
+  padding: 16px 18px 18px;
+}
+
+.projectInfo h3 {
+  margin: 0;
+  font-size: 17px;
+  font-weight: 600;
+}
+
+.projectInfo p {
+  margin: 4px 0 0;
+  font-size: 14.5px;
+  color: var(--muted);
+}
+
+/* ---------- stack ---------- */
+.stackGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+}
+
+.stackGroup {
+  padding: 20px;
+  border-radius: 18px;
+  background: var(--surface);
+  box-shadow: var(--shadow-widget);
+}
+
+.stackGroup h4 {
+  margin: 0 0 12px;
+  font-size: 17px;
+  font-weight: 600;
+}
+
+.stackGroup ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.stackGroup li {
+  padding: 7px 0;
+  border-top: 0.5px solid var(--line);
+  font-size: 15px;
+}
+
+.stackGroup li:first-child {
+  border: 0;
+}
+
+:global([data-tone="alt"]) .projectCard,
+:global([data-tone="alt"]) .stackGroup {
+  box-shadow: none;
+}
+
+/* ---------- about ---------- */
+.bio {
+  max-width: 62ch;
+  font-size: 16px;
+}
+
+.bio p {
+  margin: 0 0 14px;
+}
+
+.facts {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  gap: 8px 20px;
+  margin: 20px 0 0;
+  font-size: 14px;
+}
+
+.fact {
+  display: contents;
+}
+
+.fact dt {
+  color: var(--muted);
+}
+
+.fact dd {
+  margin: 0;
+}
+
+:global([data-surface="page"]) .bio {
+  max-width: 56ch;
+  font-size: clamp(18px, 1.7vw, 21px);
+  line-height: 1.5;
+}
+
+:global([data-surface="page"]) .facts {
+  margin-top: 36px;
+  font-size: 16px;
+}
+
+/* ---------- contact ---------- */
+.email {
+  font-size: clamp(22px, 3.4vw, 40px);
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  word-break: break-all;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 18px;
+}
+
+.links {
+  display: flex;
+  flex-direction: column;
+  margin-top: 24px;
+  border-top: 0.5px solid var(--line);
+}
+
+.links a {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 15px 0;
+  border-bottom: 0.5px solid var(--line);
+  color: var(--ink);
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.links a span {
+  color: var(--muted);
+  font-weight: 400;
+}
+
+@media (max-width: 900px) {
+  .job {
+    grid-template-columns: 1fr;
+    gap: 4px;
+  }
+
+  .featuredJob,
+  :global([data-surface="page"]) .featuredJob {
+    padding: 20px;
+  }
+}

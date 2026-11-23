@@ -1,0 +1,64 @@
+.terminal {
+  flex: 1;
+  overflow: auto;
+  padding: 12px 16px 16px;
+  color: var(--term-ink);
+  font: 13px/1.62 var(--font-mono);
+  cursor: text;
+}
+
+.line {
+  margin: 0 0 6px;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.prompt {
+  color: var(--prompt);
+}
+
+.prompt em {
+  color: var(--term-dim);
+  font-style: normal;
+}
+
+.cmd {
+  color: var(--path);
+}
+
+.dim {
+  color: var(--term-dim);
+}
+
+.form {
+  display: flex;
+  gap: 8px;
+}
+
+.form input {
+  flex: 1;
+  padding: 0;
+  border: 0;
+  outline: 0;
+  background: none;
+  color: var(--term-ink);
+  font: inherit;
+  caret-color: var(--prompt);
+}
+
+/* Cursor at the end of an answer while it streams in. */
+.streamCaret {
+  display: inline-block;
+  width: 7px;
+  height: 1em;
+  margin-left: 2px;
+  vertical-align: text-bottom;
+  background: currentColor;
+  animation: streamBlink 1s steps(1) infinite;
+}
+
+@keyframes streamBlink {
+  50% {
+    opacity: 0;
+  }
+}

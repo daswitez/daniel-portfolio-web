@@ -1,0 +1,122 @@
+.grid {
+  position: absolute;
+  left: 24px;
+  top: 52px;
+  width: 312px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.widget {
+  min-height: 150px;
+  padding: 14px;
+  border-radius: 22px;
+}
+
+.wide {
+  grid-column: span 2;
+  min-height: 0;
+}
+
+/* ---------- clock ---------- */
+.clock svg {
+  width: 100%;
+  height: 122px;
+}
+
+.clock text {
+  font-size: 6.5px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  fill: var(--muted);
+}
+
+/* ---------- calendar ---------- */
+.weekday {
+  color: var(--red);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  min-height: 1.4em;
+}
+
+.day {
+  font-size: 26px;
+  font-weight: 600;
+  line-height: 1.1;
+  min-height: 1.1em;
+}
+
+.monthGrid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 2px 0;
+  margin-top: 6px;
+  font-size: 9.5px;
+  text-align: center;
+}
+
+.monthGrid b {
+  color: var(--muted);
+  font-weight: 500;
+}
+
+.today {
+  border-radius: 50%;
+  background: var(--red);
+  color: #fff;
+  font-weight: 700;
+}
+
+/* ---------- initials ---------- */
+.initials {
+  display: grid;
+  place-items: center;
+  background: var(--ink);
+  color: var(--bg);
+  font-size: 42px;
+  font-weight: 600;
+  letter-spacing: -0.04em;
+}
+
+/* ---------- photo ---------- */
+.photo {
+  position: relative;
+  overflow: hidden;
+  padding: 0;
+}
+
+.photoImage {
+  object-fit: cover;
+  /* Portrait is taller than the tile: keep the face, not the jacket. */
+  object-position: 50% 35%;
+}
+
+/* ---------- status ---------- */
+.status {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.status h4 {
+  margin: 0;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.status p {
+  margin: 0;
+  font-size: 12px;
+  color: var(--muted);
+}
+
+@media (max-width: 900px) {
+  .grid {
+    position: static;
+    width: auto;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  }
+}

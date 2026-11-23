@@ -1,0 +1,18 @@
+.button {
+  border: 0;
+  border-radius: 999px;
+  padding: 10px 20px;
+  min-height: 44px;
+  font-size: 15px;
+  font-weight: 500;
+}
+
+.primary {
+  background: var(--accent);
+  color: #fff;
+}
+
+.ghost {
+  background: var(--sunken);
+  color: var(--ink);
+}

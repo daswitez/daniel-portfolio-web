@@ -1,6 +1,5 @@
 "use client";
 
-import { useRouter } from "next/navigation";
 import { useId, useRef } from "react";
 import { CheckIcon, GlobeIcon } from "@/components/icons/SystemIcons";
 import {
@@ -27,7 +26,6 @@ function saveLocale(locale: Locale) {
  */
 export function LanguageMenu() {
   const { t, locale } = useI18n();
-  const router = useRouter();
   const menuId = useId();
   const menuRef = useRef<HTMLDivElement>(null);
 
@@ -36,7 +34,9 @@ export function LanguageMenu() {
     if (next === locale) return;
     saveLocale(next);
     // Same page in the other language, keeping the section the visitor is on.
-    router.replace(`/${next}${window.location.hash}`, { scroll: false });
+    // A full load (not router.replace): each language is its own root layout, and
+    // re-rendering <html> on the client trips React's "<script> in a component" error.
+    window.location.replace(`/${next}${window.location.hash}`);
   }
 
   return (

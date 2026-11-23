@@ -57,11 +57,13 @@
   padding: 0 max(5vw, 20px);
 }
 
-/* Each word slides up from behind its own mask. */
+/* Each word slides up from behind its own mask. The padding gives the last letter
+   (tight tracking), descenders and commas room; the negative margin keeps the layout. */
 .mask {
   display: inline-block;
   overflow: hidden;
-  padding-bottom: 0.08em;
+  padding: 0 0.12em 0.18em;
+  margin: 0 -0.12em -0.1em;
   vertical-align: top;
 }
 

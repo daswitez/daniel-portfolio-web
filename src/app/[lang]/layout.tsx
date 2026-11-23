@@ -64,6 +64,8 @@ export default async function RootLayout({
       suppressHydrationWarning
     >
       <head>
+        {/* Applies the saved theme before first paint (no flash). This root layout is
+            only ever rendered on the server: changing language reloads the page. */}
         <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
       </head>
       {/* Extensions like Grammarly add attributes to <body> before React loads. */}

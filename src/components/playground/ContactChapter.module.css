@@ -26,7 +26,10 @@
 .wordGroup {
   display: inline-flex;
   overflow: hidden;
-  padding: 0.1em 0 0.05em;
+  /* Side/bottom room so the last letter (tight tracking) and descenders aren't cut;
+     the negative margin keeps the spacing between words as before. */
+  padding: 0.1em 0.12em 0.16em;
+  margin: 0 -0.12em -0.11em;
 }
 
 .letter {

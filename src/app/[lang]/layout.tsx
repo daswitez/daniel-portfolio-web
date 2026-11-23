@@ -46,10 +46,8 @@ export async function generateMetadata({
 }
 
 export const viewport: Viewport = {
-  themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#fbfbfd" },
-    { media: "(prefers-color-scheme: dark)", color: "#000000" },
-  ],
+  // Matches the default light theme (the visitor can switch to dark in the menu bar).
+  themeColor: "#fbfbfd",
 };
 
 export default async function RootLayout({

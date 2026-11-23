@@ -5,7 +5,8 @@
  * TYPE: SF / Inter + Geist Mono.
  */
 :root {
-  color-scheme: light dark;
+  /* Light by default; dark only when the visitor picks it (data-theme="dark"). */
+  color-scheme: light;
 
   /* surfaces */
   --desk: light-dark(#fbfbfd, #000);

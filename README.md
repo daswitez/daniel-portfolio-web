@@ -91,9 +91,9 @@ O código-fonte deste projeto está licenciado sob a **Licença MIT** - consulte
 ---
 
 ### 🎵 Third-party assets
-Some assets belong to others and are not covered by the MIT License: the song *Feel The Rhythm*
-and its cover art (in `public/music` and `public/img`) belong to Orion and Kharmatic, and Clawd,
-the Claude Code mascot, belongs to Anthropic.
+Some assets belong to others and are not covered by the MIT License: the songs and their cover art
+in `public/music` and `public/img` (*Feel The Rhythm* by Orion and Kharmatic, and *malibU* by
+rusowsky) belong to their artists, and Clawd, the Claude Code mascot, belongs to Anthropic.
 
 ---
 

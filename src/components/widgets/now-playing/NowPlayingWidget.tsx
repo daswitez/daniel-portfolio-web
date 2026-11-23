@@ -11,7 +11,7 @@ import {
 import { useI18n } from "@/i18n/I18nProvider";
 import { cn } from "@/lib/text";
 import { Widget } from "../Widget";
-import { FEATURED_TRACK, formatTime, useAudioPlayer } from "./useLofiPlayer";
+import { formatTime, useAudioPlayer } from "./useLofiPlayer";
 import styles from "./NowPlayingWidget.module.css";
 
 const EQ_BARS = [0, 1, 2, 3];
@@ -24,8 +24,9 @@ export function NowPlayingWidget() {
     fillRef,
     thumbWrapRef,
     toggle,
-    restart,
-    replay,
+    track,
+    previous,
+    next,
     previewScrub,
     commitScrub,
     seekBy,
@@ -91,7 +92,7 @@ export function NowPlayingWidget() {
       {/* Like Apple Music: the widget takes its colour from a blurred copy of the artwork. */}
       <div className={styles.backdrop} aria-hidden="true">
         <Image
-          src={FEATURED_TRACK.coverSrc}
+          src={track.coverSrc}
           alt=""
           fill
           sizes="200px"
@@ -104,8 +105,8 @@ export function NowPlayingWidget() {
           data-playing={isPlaying ? "true" : "false"}
         >
           <Image
-            src={FEATURED_TRACK.coverSrc}
-            alt={`${FEATURED_TRACK.title} — ${FEATURED_TRACK.artist}`}
+            src={track.coverSrc}
+            alt={`${track.title} — ${track.artist}`}
             fill
             sizes="64px"
             className={styles.artworkImage}
@@ -114,7 +115,7 @@ export function NowPlayingWidget() {
 
         <div className={styles.meta}>
           <div className={styles.titleRow}>
-            <h4>{FEATURED_TRACK.title}</h4>
+            <h4>{track.title}</h4>
             <span
               className={styles.eq}
               data-playing={isPlaying ? "true" : "false"}
@@ -125,7 +126,7 @@ export function NowPlayingWidget() {
               ))}
             </span>
           </div>
-          <p className={styles.artist}>{FEATURED_TRACK.artist}</p>
+          <p className={styles.artist}>{track.artist}</p>
 
           <div className={styles.controls}>
             <button
@@ -133,7 +134,7 @@ export function NowPlayingWidget() {
               className={styles.controlBtn}
               aria-label={t.widgets.previous}
               onPointerDown={stopWidgetDrag}
-              onClick={restart}
+              onClick={previous}
             >
               <PreviousIcon />
             </button>
@@ -165,7 +166,7 @@ export function NowPlayingWidget() {
               className={styles.controlBtn}
               aria-label={t.widgets.next}
               onPointerDown={stopWidgetDrag}
-              onClick={replay}
+              onClick={next}
             >
               <NextIcon />
             </button>

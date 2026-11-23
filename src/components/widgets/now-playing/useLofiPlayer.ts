@@ -2,14 +2,35 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 
-export const FEATURED_TRACK = {
-  title: "Feel The Rhythm",
-  artist: "Orion, Kharmatic",
-  src: "/music/feel-the-rhythm.mp3",
-  coverSrc: "/img/feel-the-rhythm-cover.jpg",
-  /** Printed on the vinyl label (3:28); replaced automatically once metadata loads. */
-  durationFallback: 208,
-} as const;
+export interface Track {
+  title: string;
+  artist: string;
+  src: string;
+  coverSrc: string;
+  /** Shown until the file's real duration loads (seconds). */
+  durationFallback: number;
+}
+
+/** The desktop player's playlist, in order. ⏮ / ⏭ move through it; it loops. */
+export const TRACKS: readonly Track[] = [
+  {
+    title: "Feel The Rhythm",
+    artist: "Orion, Kharmatic",
+    src: "/music/feel-the-rhythm.mp3",
+    coverSrc: "/img/feel-the-rhythm-cover.jpg",
+    durationFallback: 208,
+  },
+  {
+    title: "malibU",
+    artist: "rusowsky",
+    src: "/music/malibu.mp3",
+    coverSrc: "/img/malibu-cover.jpg",
+    durationFallback: 200,
+  },
+];
+
+/** Pressing ⏮ after this many seconds restarts the song (like Apple Music) instead of going back. */
+const RESTART_THRESHOLD = 3;
 
 export function formatTime(totalSeconds: number): string {
   const safe = Math.max(
@@ -26,33 +47,30 @@ function clamp01(value: number): number {
 }
 
 /**
- * HTML5 Audio controller for the desktop Now Playing widget.
+ * HTML5 Audio controller for the desktop Now Playing widget, with a small playlist.
  * Updates the progress fill and scrubber thumb directly via transforms inside
  * requestAnimationFrame (zero React re-render per frame); React state only
- * updates on play/pause or when the displayed integer second changes.
+ * updates on play/pause, track change, or when the displayed second changes.
  */
 export function useAudioPlayer() {
   const [isPlaying, setIsPlaying] = useState(false);
+  const [trackIndex, setTrackIndex] = useState(0);
   const [displayTime, setDisplayTime] = useState(0);
-  const [duration, setDuration] = useState<number>(
-    FEATURED_TRACK.durationFallback,
-  );
+  const [duration, setDuration] = useState<number>(TRACKS[0].durationFallback);
 
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const fillRef = useRef<HTMLDivElement>(null);
   const thumbWrapRef = useRef<HTMLDivElement>(null);
-  const durationRef = useRef<number>(FEATURED_TRACK.durationFallback);
+  const trackRef = useRef(0);
+  const durationRef = useRef<number>(TRACKS[0].durationFallback);
   const lastSecondRef = useRef(-1);
   const scrubbingRef = useRef(false);
 
   const paintProgress = useCallback((ratio: number, seconds: number) => {
     const clamped = clamp01(ratio);
-    if (fillRef.current) {
-      fillRef.current.style.transform = `scaleX(${clamped})`;
-    }
-    if (thumbWrapRef.current) {
+    if (fillRef.current) fillRef.current.style.transform = `scaleX(${clamped})`;
+    if (thumbWrapRef.current)
       thumbWrapRef.current.style.transform = `translateX(${clamped * 100}%)`;
-    }
     const floored = Math.floor(seconds);
     if (floored !== lastSecondRef.current) {
       lastSecondRef.current = floored;
@@ -60,8 +78,27 @@ export function useAudioPlayer() {
     }
   }, []);
 
+  /** Switches to another song; keeps playing if `autoplay` (e.g. it was already playing). */
+  const loadTrack = useCallback(
+    (index: number, autoplay: boolean) => {
+      const audio = audioRef.current;
+      if (!audio) return;
+      const next = (index + TRACKS.length) % TRACKS.length;
+      trackRef.current = next;
+      setTrackIndex(next);
+      durationRef.current = TRACKS[next].durationFallback;
+      setDuration(TRACKS[next].durationFallback);
+      audio.src = TRACKS[next].src;
+      audio.load();
+      lastSecondRef.current = -1;
+      paintProgress(0, 0);
+      if (autoplay) void audio.play().catch(() => setIsPlaying(false));
+    },
+    [paintProgress],
+  );
+
   useEffect(() => {
-    const audio = new Audio(encodeURI(FEATURED_TRACK.src));
+    const audio = new Audio(TRACKS[trackRef.current].src);
     audio.preload = "metadata";
     audioRef.current = audio;
 
@@ -80,11 +117,8 @@ export function useAudioPlayer() {
 
     const onPlay = () => setIsPlaying(true);
     const onPause = () => setIsPlaying(false);
-    const onEnded = () => {
-      audio.currentTime = 0;
-      paintProgress(0, 0);
-      setIsPlaying(false);
-    };
+    // When a song ends, the next one starts (the playlist loops).
+    const onEnded = () => loadTrack(trackRef.current + 1, true);
 
     audio.addEventListener("loadedmetadata", syncDuration);
     audio.addEventListener("durationchange", syncDuration);
@@ -104,13 +138,12 @@ export function useAudioPlayer() {
       audio.src = "";
       audioRef.current = null;
     };
-  }, [paintProgress]);
+  }, [paintProgress, loadTrack]);
 
   // 60fps GPU-composited progress sweep while playing.
   useEffect(() => {
     if (!isPlaying) return;
     let raf = 0;
-
     const tick = () => {
       const audio = audioRef.current;
       if (audio && !scrubbingRef.current) {
@@ -119,7 +152,6 @@ export function useAudioPlayer() {
       }
       raf = requestAnimationFrame(tick);
     };
-
     raf = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(raf);
   }, [isPlaying, paintProgress]);
@@ -127,27 +159,28 @@ export function useAudioPlayer() {
   const toggle = useCallback(() => {
     const audio = audioRef.current;
     if (!audio) return;
-    if (audio.paused) {
-      void audio.play().catch(() => setIsPlaying(false));
-    } else {
-      audio.pause();
-    }
+    if (audio.paused) void audio.play().catch(() => setIsPlaying(false));
+    else audio.pause();
   }, []);
 
-  const restart = useCallback(() => {
+  /** ⏮: restart the song if it's a few seconds in, otherwise go to the previous one. */
+  const previous = useCallback(() => {
     const audio = audioRef.current;
     if (!audio) return;
-    audio.currentTime = 0;
-    paintProgress(0, 0);
-  }, [paintProgress]);
+    if (audio.currentTime > RESTART_THRESHOLD) {
+      audio.currentTime = 0;
+      paintProgress(0, 0);
+      return;
+    }
+    loadTrack(trackRef.current - 1, !audio.paused);
+  }, [loadTrack, paintProgress]);
 
-  const replay = useCallback(() => {
+  /** ⏭: next song, keeping play/pause as it was. */
+  const next = useCallback(() => {
     const audio = audioRef.current;
     if (!audio) return;
-    audio.currentTime = 0;
-    paintProgress(0, 0);
-    void audio.play().catch(() => setIsPlaying(false));
-  }, [paintProgress]);
+    loadTrack(trackRef.current + 1, !audio.paused);
+  }, [loadTrack]);
 
   const previewScrub = useCallback(
     (ratio: number) => {
@@ -163,9 +196,7 @@ export function useAudioPlayer() {
       scrubbingRef.current = false;
       const clamped = clamp01(ratio);
       const targetTime = clamped * durationRef.current;
-      if (audioRef.current) {
-        audioRef.current.currentTime = targetTime;
-      }
+      if (audioRef.current) audioRef.current.currentTime = targetTime;
       paintProgress(clamped, targetTime);
     },
     [paintProgress],
@@ -176,25 +207,26 @@ export function useAudioPlayer() {
       const audio = audioRef.current;
       if (!audio) return;
       const total = durationRef.current || 1;
-      const next = Math.min(
+      const target = Math.min(
         total,
         Math.max(0, audio.currentTime + deltaSeconds),
       );
-      audio.currentTime = next;
-      paintProgress(next / total, next);
+      audio.currentTime = target;
+      paintProgress(target / total, target);
     },
     [paintProgress],
   );
 
   return {
+    track: TRACKS[trackIndex],
     isPlaying,
     displayTime,
     duration,
     fillRef,
     thumbWrapRef,
     toggle,
-    restart,
-    replay,
+    previous,
+    next,
     previewScrub,
     commitScrub,
     seekBy,

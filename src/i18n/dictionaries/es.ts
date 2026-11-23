@@ -153,6 +153,8 @@ export const es = {
     folders: "Carpetas",
     apps: "Aplicaciones",
     widgets: "Widgets",
+    figmaFile: "Portfolio.fig",
+    figmaOpen: "Abrir el diseño de este portafolio en Figma (nueva pestaña)",
     appNames: {
       files: "Archivos",
       terminal: "Terminal",

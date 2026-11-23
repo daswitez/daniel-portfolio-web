@@ -16,6 +16,8 @@ export const identity = {
   photo: { src: "/img/daniel.jpg", width: 1024, height: 1536 },
   email: "danielmercadosubirana@gmail.com",
   repoUrl: "https://github.com/daswitez/daniel-portfolio-web",
+  figmaUrl:
+    "https://www.figma.com/community/file/1706822224086220281/portfolio-macos-style",
   links: [
     {
       label: "GitHub",

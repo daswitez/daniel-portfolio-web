@@ -64,4 +64,6 @@ export interface Profile {
   links: SocialLink[];
   /** This portfolio's source code (opened by the "Code" app on the desk). */
   repoUrl: string;
+  /** This portfolio's design file on Figma Community (the .fig icon on the desk). */
+  figmaUrl: string;
 }

@@ -155,6 +155,8 @@ export const pt: Dictionary = {
     folders: "Pastas",
     apps: "Aplicativos",
     widgets: "Widgets",
+    figmaFile: "Portfolio.fig",
+    figmaOpen: "Abrir o design deste portfólio no Figma (nova aba)",
     appNames: {
       files: "Arquivos",
       terminal: "Terminal",

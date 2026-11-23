@@ -49,7 +49,7 @@ export function AppLauncher() {
   const { open, deskRef } = useWindowActions();
   const onDragStart = useDesktopDrag<HTMLElement>(deskRef);
   const { t, profile } = useI18n();
-  const codeUrl = profile.links[0]?.url;
+  const codeUrl = profile.repoUrl;
 
   return (
     <nav

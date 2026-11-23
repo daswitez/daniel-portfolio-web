@@ -15,11 +15,12 @@ export const identity = {
   initials: "D",
   photo: { src: "/img/daniel.jpg", width: 1024, height: 1536 },
   email: "danielmercadosubirana@gmail.com",
+  repoUrl: "https://github.com/daswitez/daniel-portfolio-web",
   links: [
     {
       label: "GitHub",
-      handle: "github.com/tunombre",
-      url: "https://github.com/",
+      handle: "github.com/daswitez/daniel-portfolio-web",
+      url: "https://github.com/daswitez/daniel-portfolio-web",
     },
     {
       label: "LinkedIn",

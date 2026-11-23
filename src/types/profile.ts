@@ -62,4 +62,6 @@ export interface Profile {
   projects: Project[];
   stack: StackGroup[];
   links: SocialLink[];
+  /** This portfolio's source code (opened by the "Code" app on the desk). */
+  repoUrl: string;
 }

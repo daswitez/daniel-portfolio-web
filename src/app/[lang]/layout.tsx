@@ -1,3 +1,4 @@
+import { Analytics } from "@vercel/analytics/next";
 import type { Metadata, Viewport } from "next";
 import { Geist_Mono, Inter } from "next/font/google";
 import { notFound } from "next/navigation";
@@ -17,6 +18,9 @@ const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
   weight: ["400", "500"],
+  // Only used below the first screen (playground, windows, tags): not worth a
+  // preload that competes with the LCP image. It still loads, just not first.
+  preload: false,
 });
 
 /** Every language is prerendered at build time: /en, /es, /pt. */
@@ -93,7 +97,11 @@ export default async function RootLayout({
         <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
       </head>
       {/* Extensions like Grammarly add attributes to <body> before React loads. */}
-      <body suppressHydrationWarning>{children}</body>
+      <body suppressHydrationWarning>
+        {children}
+        {/* Vercel Web Analytics: page views, no cookies. Sends nothing in development. */}
+        <Analytics />
+      </body>
     </html>
   );
 }

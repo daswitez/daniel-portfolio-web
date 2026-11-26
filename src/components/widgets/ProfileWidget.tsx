@@ -24,7 +24,9 @@ export function ProfileWidget({
         alt={name}
         fill
         sizes="160px"
-        preload
+        // Eager, but not preloaded: the high-priority slot goes to the LCP image
+        // (the Now Playing backdrop), so the two don't compete.
+        loading="eager"
         draggable={false}
         className={styles.photoImage}
       />

@@ -96,8 +96,11 @@ export function NowPlayingWidget() {
           alt=""
           fill
           sizes="200px"
-          // Visible on first load (on phones it's the largest image on screen): no lazy wait.
-          loading="eager"
+          // The page's LCP element (largest thing on first load, per PageSpeed):
+          // preloaded from the HTML. `preload` alone doesn't raise the priority;
+          // fetchPriority goes on both the <img> and its preload link.
+          preload
+          fetchPriority="high"
           className={styles.backdropImage}
         />
       </div>

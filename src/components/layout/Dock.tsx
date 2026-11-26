@@ -3,7 +3,8 @@
 import {
   AnimatePresence,
   LayoutGroup,
-  motion,
+  LazyMotion,
+  m,
   MotionConfig,
   type Transition,
 } from "motion/react";
@@ -27,6 +28,8 @@ const LENS: Transition = { type: "spring", bounce: 0.15, visualDuration: 0.35 };
 const LABEL: Transition = { type: "spring", bounce: 0, visualDuration: 0.25 };
 const INSTANT: Transition = { duration: 0 };
 
+const loadFeatures = () => import("./dockMotionFeatures").then((mod) => mod.default);
+
 /**
  * Liquid-glass dock. Sits at the bottom like a MacBook dock over the hero, then
  * glides up to become the top navigation bar for the sections below.
@@ -39,67 +42,71 @@ export function Dock() {
   const move = settled ? MOVE : INSTANT;
 
   return (
-    <MotionConfig reducedMotion="user">
-      <div className={styles.layer} data-placement={placement}>
-        <LayoutGroup id="dock">
-          <motion.nav
-            layout
-            transition={move}
-            className={cn("liquid-glass", styles.dock)}
-            style={{ borderRadius: 26 }}
-            aria-label={t.nav.label}
-          >
-            {DOCK_ITEMS.map((item) => {
-              const isActive = item.sectionId === active;
-              const label = t.nav[item.sectionId];
-              return (
-                <motion.a
-                  key={item.sectionId}
-                  layout
-                  transition={move}
-                  href={`#${item.sectionId}`}
-                  className={cn(styles.item, isActive && styles.active)}
-                  style={{ borderRadius: 18 }}
-                  aria-current={isActive ? "location" : undefined}
-                  aria-label={label}
-                >
-                  {isActive && (
-                    <motion.span
-                      layoutId="dock-lens"
-                      className={styles.lens}
-                      style={{ borderRadius: 18 }}
-                      transition={settled ? LENS : INSTANT}
-                    />
-                  )}
-                  <motion.span layout transition={move} className={styles.icon}>
-                    <DockIcon name={item.icon} />
-                  </motion.span>
-                  <AnimatePresence initial={false} mode="popLayout">
-                    {isNav && (
-                      <motion.span
-                        key="label"
-                        layout="position"
-                        className={styles.label}
-                        initial={{ opacity: 0, filter: "blur(4px)" }}
-                        animate={{ opacity: 1, filter: "blur(0px)" }}
-                        exit={{ opacity: 0, filter: "blur(4px)" }}
-                        transition={LABEL}
-                      >
-                        {label}
-                      </motion.span>
+    // LazyMotion + `m`: the animation engine (~30 KB) downloads after the page loads
+    // instead of blocking it. Until then the dock renders normally, just without motion.
+    <LazyMotion features={loadFeatures} strict>
+      <MotionConfig reducedMotion="user">
+        <div className={styles.layer} data-placement={placement}>
+          <LayoutGroup id="dock">
+            <m.nav
+              layout
+              transition={move}
+              className={cn("liquid-glass", styles.dock)}
+              style={{ borderRadius: 26 }}
+              aria-label={t.nav.label}
+            >
+              {DOCK_ITEMS.map((item) => {
+                const isActive = item.sectionId === active;
+                const label = t.nav[item.sectionId];
+                return (
+                  <m.a
+                    key={item.sectionId}
+                    layout
+                    transition={move}
+                    href={`#${item.sectionId}`}
+                    className={cn(styles.item, isActive && styles.active)}
+                    style={{ borderRadius: 18 }}
+                    aria-current={isActive ? "location" : undefined}
+                    aria-label={label}
+                  >
+                    {isActive && (
+                      <m.span
+                        layoutId="dock-lens"
+                        className={styles.lens}
+                        style={{ borderRadius: 18 }}
+                        transition={settled ? LENS : INSTANT}
+                      />
                     )}
-                  </AnimatePresence>
-                  {!isNav && (
-                    <span className={styles.tooltip} aria-hidden="true">
-                      {label}
-                    </span>
-                  )}
-                </motion.a>
-              );
-            })}
-          </motion.nav>
-        </LayoutGroup>
-      </div>
-    </MotionConfig>
+                    <m.span layout transition={move} className={styles.icon}>
+                      <DockIcon name={item.icon} />
+                    </m.span>
+                    <AnimatePresence initial={false} mode="popLayout">
+                      {isNav && (
+                        <m.span
+                          key="label"
+                          layout="position"
+                          className={styles.label}
+                          initial={{ opacity: 0, filter: "blur(4px)" }}
+                          animate={{ opacity: 1, filter: "blur(0px)" }}
+                          exit={{ opacity: 0, filter: "blur(4px)" }}
+                          transition={LABEL}
+                        >
+                          {label}
+                        </m.span>
+                      )}
+                    </AnimatePresence>
+                    {!isNav && (
+                      <span className={styles.tooltip} aria-hidden="true">
+                        {label}
+                      </span>
+                    )}
+                  </m.a>
+                );
+              })}
+            </m.nav>
+          </LayoutGroup>
+        </div>
+      </MotionConfig>
+    </LazyMotion>
   );
 }

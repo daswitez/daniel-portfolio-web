@@ -96,6 +96,8 @@ export function NowPlayingWidget() {
           alt=""
           fill
           sizes="200px"
+          // Visible on first load (on phones it's the largest image on screen): no lazy wait.
+          loading="eager"
           className={styles.backdropImage}
         />
       </div>
@@ -109,6 +111,7 @@ export function NowPlayingWidget() {
             alt={`${track.title} — ${track.artist}`}
             fill
             sizes="64px"
+            loading="eager"
             className={styles.artworkImage}
           />
         </div>

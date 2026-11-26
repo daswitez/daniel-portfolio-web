@@ -99,7 +99,10 @@ export function useAudioPlayer() {
 
   useEffect(() => {
     const audio = new Audio(TRACKS[trackRef.current].src);
-    audio.preload = "metadata";
+    // Nothing downloads until the first play: the song isn't needed to show the page,
+    // and on a phone it competed with the page's own files. The widget shows
+    // `durationFallback` until the real duration arrives.
+    audio.preload = "none";
     audioRef.current = audio;
 
     const syncDuration = () => {

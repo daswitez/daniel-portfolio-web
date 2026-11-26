@@ -58,6 +58,8 @@ export function WhyChapter() {
   const [order, setOrder] = useState(() => reasons.map((_, i) => i));
   const [seen, setSeen] = useState(0);
   const busy = useRef(false);
+  /** The deck's entrance, finished early if a card is grabbed mid-way. */
+  const intro = useRef<gsap.core.Tween>(null);
   const drag = useRef<Drag | null>(null);
   /** The card that was just thrown and its direction, to slide it back in. */
   const recycled = useRef<{ card: HTMLElement; direction: number } | null>(
@@ -69,7 +71,7 @@ export function WhyChapter() {
       const mm = gsap.matchMedia();
       mm.add(MOTION.any, () => {
         // Animate the cards, not the slots: slots hold the deck offsets in CSS.
-        gsap.from("[data-card]", {
+        intro.current = gsap.from("[data-card]", {
           y: 200,
           rotation: (i) => (i % 2 ? 20 : -20),
           opacity: 0,
@@ -186,6 +188,9 @@ export function WhyChapter() {
     if (busy.current) return;
     const card = event.currentTarget;
     card.setPointerCapture(event.pointerId);
+    // Grabbed while the deck is still dealing in: finish that first, or killing it
+    // below would leave cards half-transparent and off their place.
+    if (intro.current?.isActive()) intro.current.progress(1);
     // Catch it mid-spring: continue from wherever it is right now.
     gsap.killTweensOf(card);
     gsap.killTweensOf(deck.current);

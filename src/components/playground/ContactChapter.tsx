@@ -58,6 +58,10 @@ export function ContactChapter() {
 
   const hop = contextSafe((event: React.PointerEvent<HTMLElement>) => {
     if (matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    // While a letter is still moving (flying in, back out on scroll-up, or mid-hop),
+    // leave it alone: a hop used to cancel the entrance and freeze the letter
+    // halfway, cut by its mask.
+    if (gsap.isTweening(event.currentTarget)) return;
     gsap.fromTo(
       event.currentTarget,
       { y: 0 },
@@ -67,7 +71,6 @@ export function ContactChapter() {
         ease: "power2.out",
         yoyo: true,
         repeat: 1,
-        overwrite: true,
       },
     );
   });

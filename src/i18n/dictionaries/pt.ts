@@ -2,8 +2,9 @@ import type { Dictionary } from "./es";
 
 export const pt: Dictionary = {
   meta: {
-    description: "{name} — {role}. {lede}",
-  },
+    title: "{name} · Desenvolvedor Fullstack e Designer UI/UX",
+    description:
+      "Portfólio de {name}, desenvolvedor fullstack e designer UI/UX. Crio produtos com IA, agentes e interfaces com Next.js, TypeScript e Supabase. Disponível para trabalho remoto.",  },
   menubar: {
     available: "Disponível",
     language: "Idioma",

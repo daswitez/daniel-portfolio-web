@@ -1,8 +1,9 @@
 /** Spanish UI strings. This file is the source of truth for the dictionary shape. */
 export const es = {
   meta: {
-    description: "{name} — {role}. {lede}",
-  },
+    title: "{name} · Desarrollador Fullstack y Diseñador UI/UX",
+    description:
+      "Portafolio de {name}, desarrollador fullstack y diseñador UI/UX. Construyo productos con IA, agentes e interfaces con Next.js, TypeScript y Supabase. Disponible para trabajo remoto.",  },
   menubar: {
     available: "Disponible",
     language: "Idioma",

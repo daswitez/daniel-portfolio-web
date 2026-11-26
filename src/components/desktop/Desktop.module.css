@@ -229,6 +229,9 @@ a.icon {
 /* ---------- zoom-out into a laptop (animated by DeskZoom) ---------- */
 .heroSection {
   position: relative;
+  /* The (hidden) laptop base is wider than a phone screen; without this the whole
+     page could be dragged sideways. `clip`, unlike `hidden`, keeps pinning working. */
+  overflow-x: clip;
 }
 
 .desk {

@@ -9,9 +9,30 @@
 
 .stage {
   display: grid;
-  gap: 32px;
   max-width: 1400px;
   margin: 0 auto;
+}
+
+/*
+ * Stacked order: title → screen → steps. The active step opens and closes as the
+ * screen builds; with the steps below the screen, that change in height no longer
+ * pushes the screen up and down while you're looking at it.
+ */
+.side {
+  display: contents;
+}
+
+.side > * {
+  order: 2;
+}
+
+.side > :nth-child(-n + 3) {
+  order: 0;
+}
+
+.visual {
+  order: 1;
+  margin-top: 28px;
 }
 
 .title {
@@ -380,7 +401,12 @@
     padding: 104px clamp(24px, 4vw, 64px) 32px;
   }
 
+  .side {
+    display: block;
+  }
+
   .visual {
+    margin-top: 0;
     height: 100%;
     container-type: size;
   }

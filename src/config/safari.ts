@@ -66,6 +66,17 @@ export const SAFARI_PAGES: Record<SafariPageId, SafariPage> = {
     },
     accent: "#0a1f3d",
   },
+  landed: {
+    id: "landed",
+    type: "preview",
+    title: "Landed",
+    displayUrl: "landed-six-mu.vercel.app",
+    href: "https://landed-six-mu.vercel.app/",
+    // Sends no X-Frame-Options / frame-ancestors, so the tab is the real, browsable app.
+    live: true,
+    image: { src: "/previews/landed@2x.webp", width: 2880, height: 1800 },
+    accent: "#f4efe6",
+  },
 };
 
 export const DEFAULT_SAFARI_PAGE: SafariPageId = "game";

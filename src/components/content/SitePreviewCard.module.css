@@ -17,6 +17,11 @@
     box-shadow 0.25s var(--ease);
 }
 
+.wide {
+  max-width: none;
+  margin-top: 0;
+}
+
 @media (hover: hover) and (pointer: fine) {
   .card:hover {
     transform: translateY(-2px);

@@ -54,15 +54,27 @@ export const en: ProfileText = {
     },
   },
   projects: {
-    grazia: {
-      title: "Grazia AI",
+    landed: {
+      title: "Landed",
+      tagline: "Rent a home abroad before you've ever set foot in it.",
       description:
-        "AI video platform: ads, AI influencers, UGC and real estate videos in minutes.",
-    },
-    rlt: {
-      title: "Real Latino Talent",
-      description:
-        "Website for a remote LATAM staffing agency working with U.S. businesses.",
+        "Furnished homes for 3 to 24 months in Lisbon and Porto for people moving from abroad: search, video viewing, documents and lease, all online and in three languages. The goal: go from 3 weeks to 5 days between first enquiry and signed lease.",
+      role: "Product, UX/UI, design system and full-stack development, end to end",
+      highlights: [
+        "Search by real public-transit minutes to your office or university, with a synced map and list.",
+        "All-inclusive pricing shown in your own currency, using the ECB's daily exchange rate.",
+        "Video viewings in your time zone with no double bookings: Postgres prevents them with an exclusion constraint.",
+        "An AI assistant grounded in real data: it recommends homes that exist, checks open slots and books the viewing.",
+        "Real product security: its own API, httpOnly cookies, CSRF checks and Row Level Security on every table.",
+        "Public demo with 5 roles, accessible (axe, WCAG 2.1 AA) and designed mobile-first.",
+      ],
+      stats: [
+        { value: "31", label: "Pages" },
+        { value: "44", label: "API endpoints" },
+        { value: "62", label: "Screens in Figma" },
+        { value: "3", label: "Languages" },
+      ],
+      note: "Portfolio project: the homes, people and company in the demo are fictional. To try it: Sign in → Try the demo.",
     },
   },
   stack: [

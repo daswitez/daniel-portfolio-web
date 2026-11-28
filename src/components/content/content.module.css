@@ -110,6 +110,139 @@
 }
 
 /* ---------- projects ---------- */
+.projects {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+/* Featured project: a short case study. */
+.case {
+  max-width: 760px;
+}
+
+.caseHeader {
+  margin: 22px 0 12px;
+}
+
+.case h3 {
+  margin: 0;
+  font-size: 24px;
+  font-weight: 650;
+  letter-spacing: -0.02em;
+}
+
+.caseTagline {
+  margin: 4px 0 0;
+  color: var(--muted);
+  font-size: 16px;
+  text-wrap: pretty;
+}
+
+.caseRole {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin: 0 0 18px;
+  font-size: 14.5px;
+}
+
+.caseRole span,
+.caseHighlights h4,
+.caseStats dt {
+  color: var(--muted);
+  font: 500 11.5px/1.5 var(--font-mono);
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+.caseStats {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
+  margin: 0 0 22px;
+}
+
+.caseStats div {
+  display: flex;
+  flex-direction: column-reverse;
+  gap: 2px;
+  padding: 12px 14px;
+  border-radius: 14px;
+  background: var(--sunken);
+}
+
+.caseStats dd {
+  margin: 0;
+  font-size: 24px;
+  font-weight: 650;
+  letter-spacing: -0.03em;
+  font-variant-numeric: tabular-nums;
+}
+
+.caseHighlights {
+  margin-bottom: 18px;
+}
+
+.caseHighlights h4 {
+  margin: 0 0 8px;
+}
+
+.caseHighlights ul {
+  margin: 0;
+  padding-left: 18px;
+  font-size: 15px;
+}
+
+.caseHighlights li {
+  margin: 5px 0;
+  text-wrap: pretty;
+}
+
+.caseActions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin-top: 20px;
+}
+
+.caseActions a,
+.caseActions button {
+  display: inline-flex;
+  align-items: center;
+  min-height: 40px;
+  padding: 0 16px;
+  border: 0;
+  border-radius: 999px;
+  background: var(--sunken);
+  box-shadow: inset 0 0 0 0.5px var(--line);
+  color: var(--ink);
+  font: inherit;
+  font-size: 14px;
+  font-weight: 500;
+  text-decoration: none;
+  transition: transform 0.12s var(--ease);
+}
+
+.caseActions .casePrimary {
+  background: var(--accent);
+  box-shadow: none;
+  color: #fff;
+}
+
+.caseActions a:active,
+.caseActions button:active {
+  transform: scale(0.97);
+}
+
+.caseNote {
+  margin: 16px 0 0;
+  color: var(--muted);
+  font-size: 12.5px;
+  text-wrap: pretty;
+}
+
 .projectGrid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
@@ -309,5 +442,92 @@ button.projectCard {
   .featuredJob,
   :global([data-surface="page"]) .featuredJob {
     padding: 20px;
+  }
+}
+
+/* Phones: content sits inside a window that's ~370px wide, so tighten everything. */
+@media (max-width: 640px) {
+  .job {
+    padding: 18px 0;
+  }
+
+  .job h3 {
+    font-size: 16.5px;
+    line-height: 1.3;
+  }
+
+  .job ul,
+  .jobDescription,
+  .company {
+    font-size: 14.5px;
+  }
+
+  .jobDescription {
+    line-height: 1.5;
+  }
+
+  .featuredJob,
+  :global([data-surface="page"]) .featuredJob {
+    margin-inline: -4px;
+    padding: 16px;
+    border-radius: 18px;
+  }
+
+  .featuredJob h3 {
+    font-size: 19px;
+  }
+
+  .case h3 {
+    font-size: 21px;
+  }
+
+  .caseTagline {
+    font-size: 15px;
+  }
+
+  .caseStats {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+  }
+
+  .caseStats div {
+    padding: 10px 12px;
+  }
+
+  .caseStats dd {
+    font-size: 21px;
+  }
+
+  .caseHighlights ul {
+    font-size: 14.5px;
+  }
+
+  .caseActions a,
+  .caseActions button {
+    flex: 1 1 auto;
+    justify-content: center;
+    min-height: 44px;
+  }
+
+  .stackGrid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .stackGroup {
+    padding: 16px;
+  }
+
+  .bio {
+    font-size: 15px;
+  }
+
+  .facts {
+    grid-template-columns: 1fr;
+    gap: 2px;
+  }
+
+  .fact dd {
+    margin-bottom: 10px;
   }
 }

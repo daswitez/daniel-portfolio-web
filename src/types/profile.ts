@@ -20,11 +20,30 @@ export interface Experience {
   previewPage?: SafariPageId;
 }
 
-export type SafariPageId = "game" | "grazia" | "rlt";
+export type SafariPageId = "game" | "grazia" | "rlt" | "landed";
+
+export interface ProjectStat {
+  value: string;
+  label: string;
+}
 
 export interface Project {
   title: string;
+  /** Short summary (terminal, AI assistant, compact cards). */
   description: string;
+  /** One-line pitch shown under the title in the case study. */
+  tagline?: string;
+  /** What I did on it. */
+  role?: string;
+  /** What makes it stand out, one point each. */
+  highlights?: string[];
+  stats?: ProjectStat[];
+  /** Small print under the case study (e.g. "demo data is fictional"). */
+  note?: string;
+  /** Rendered as a full case study (live preview, highlights, numbers). */
+  featured?: boolean;
+  /** Design file, shown as a secondary link. */
+  figmaUrl?: string;
   tags: string[];
   /** Cover background colour (shown while the screenshot loads, or alone). */
   color: string;

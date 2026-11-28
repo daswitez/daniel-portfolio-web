@@ -18,15 +18,30 @@ export function FinderWindow() {
   const folder = getFolder(folderId);
   const folderName = t.folders[folder.id];
 
-  // Each folder starts scrolled to the top.
+  const navRef = useRef<HTMLElement>(null);
+
+  // Each folder starts scrolled to the top, and on phones (where the folders are
+  // a scrollable tab row) the active tab is brought into view.
   useEffect(() => {
     mainRef.current?.scrollTo({ top: 0 });
+    const nav = navRef.current;
+    const active = nav?.querySelector<HTMLElement>("[aria-current]");
+    if (nav && active && nav.scrollWidth > nav.clientWidth) {
+      nav.scrollTo({
+        left: active.offsetLeft - (nav.clientWidth - active.offsetWidth) / 2,
+        behavior: "smooth",
+      });
+    }
   }, [folderId]);
 
   return (
     <Window kind="finder" title={folderName}>
       <div className={styles.finder}>
-        <nav className={styles.sidebar} aria-label={t.finder.favorites}>
+        <nav
+          ref={navRef}
+          className={styles.sidebar}
+          aria-label={t.finder.favorites}
+        >
           <small>{t.finder.favorites}</small>
           {FOLDERS.map((item) => (
             <button

@@ -191,6 +191,10 @@ export const pt: Dictionary = {
     copyEmail: "Copiar e-mail",
     copied: "Copiado!",
     askTerminal: "Perguntar à minha IA",
+    myRole: "O meu papel",
+    standsOut: "O que o torna diferente",
+    liveSite: "Ver ao vivo",
+    designFile: "Design no Figma",
   },
   footer: "Desenhado e construído à mão.",
   window: {

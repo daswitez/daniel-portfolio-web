@@ -189,6 +189,10 @@ export const es = {
     copyEmail: "Copiar correo",
     copied: "¡Copiado!",
     askTerminal: "Preguntarle a mi IA",
+    myRole: "Mi rol",
+    standsOut: "Qué lo hace distinto",
+    liveSite: "Ver en vivo",
+    designFile: "Diseño en Figma",
   },
   footer: "Diseñado y construido a mano.",
   window: {

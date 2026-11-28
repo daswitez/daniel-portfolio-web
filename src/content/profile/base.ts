@@ -34,7 +34,7 @@ export const identity = {
 };
 
 export type ExperienceKey = "solvertic" | "grazia" | "freelance";
-export type ProjectKey = "grazia" | "rlt";
+export type ProjectKey = "landed";
 
 type ExperienceBase = Omit<
   Experience,
@@ -73,18 +73,42 @@ export const EXPERIENCE: ExperienceBase[] = [
   },
 ];
 
-/** Real work only (the old sample projects are gone). */
+/**
+ * My own products, built end to end. Jobs and client work live in EXPERIENCE,
+ * so nothing appears in both folders.
+ */
 export const PROJECTS: Array<
-  Omit<Project, "title" | "description"> & { key: ProjectKey }
+  Omit<Project, ProjectTextKey> & { key: ProjectKey }
 > = [
   {
-    key: "grazia",
-    tags: ["Next.js", "Supabase", "Generative AI"],
-    color: "#000000",
-    previewPage: "grazia",
+    key: "landed",
+    featured: true,
+    tags: [
+      "Next.js 16",
+      "React 19",
+      "TypeScript",
+      "Tailwind CSS v4",
+      "Supabase",
+      "Playwright",
+    ],
+    color: "#f4efe6",
+    previewPage: "landed",
+    figmaUrl:
+      "https://www.figma.com/design/0mVdNCCrp1UMkcOu17RUjT/Landed",
   },
-  { key: "rlt", tags: [], color: "#0a1f3d", previewPage: "rlt" },
 ];
+
+type ProjectTextKey =
+  | "title"
+  | "description"
+  | "tagline"
+  | "role"
+  | "highlights"
+  | "stats"
+  | "note";
+
+export type ProjectText = Pick<Project, "title" | "description"> &
+  Partial<Pick<Project, Exclude<ProjectTextKey, "title" | "description">>>;
 
 export interface ExperienceText {
   role: string;
@@ -106,6 +130,6 @@ export interface ProfileText {
   facts: Array<{ label: string; value: string }>;
   experienceLede: string;
   experience: Record<ExperienceKey, ExperienceText>;
-  projects: Record<ProjectKey, Pick<Project, "title" | "description">>;
+  projects: Record<ProjectKey, ProjectText>;
   stack: StackGroup[];
 }

@@ -87,3 +87,76 @@
     padding: 18px;
   }
 }
+
+/*
+ * Phones: an icon-only rail of five identical folders tells you nothing and eats
+ * a sixth of the width. Swap it for a scrollable row of labelled tabs on top.
+ */
+@media (max-width: 640px) {
+  .finder {
+    flex-direction: column;
+  }
+
+  .sidebar {
+    width: auto;
+    flex-direction: row;
+    gap: 6px;
+    padding: 8px 10px;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scrollbar-width: none;
+    border-right: 0;
+    border-bottom: 0.5px solid var(--line);
+  }
+
+  .sidebar::-webkit-scrollbar {
+    display: none;
+  }
+
+  .sidebar button {
+    flex: none;
+    gap: 6px;
+    min-height: 36px;
+    padding: 0 12px 0 10px;
+    border-radius: 999px;
+    background: var(--surface);
+    box-shadow: inset 0 0 0 0.5px var(--line);
+    font-size: 13.5px;
+    white-space: nowrap;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .sidebar button svg {
+    width: 16px;
+    height: 13px;
+  }
+
+  .sidebar .name {
+    display: inline;
+  }
+
+  .sidebar button:hover {
+    background: var(--surface);
+  }
+
+  .sidebar .active,
+  .sidebar .active:hover {
+    background: var(--ink);
+    box-shadow: none;
+    color: var(--bg);
+  }
+
+  .main {
+    padding: 16px 16px 28px;
+  }
+
+  /* The window title already says where you are. */
+  .crumb {
+    display: none;
+  }
+
+  .main h2 {
+    margin-bottom: 12px;
+    font-size: 22px;
+  }
+}

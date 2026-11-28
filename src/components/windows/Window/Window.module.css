@@ -112,6 +112,10 @@
   font: 500 12px var(--font-mono);
 }
 
+.scrim {
+  display: none;
+}
+
 @media (max-width: 900px) {
   .window,
   .maximized {
@@ -122,5 +126,55 @@
     bottom: 84px;
     width: auto;
     height: auto;
+  }
+
+  /*
+   * Behind the windows (they start at z-index 21), above the desk icons and
+   * widgets, below the dock and menubar so both stay usable.
+   */
+  .scrim {
+    position: fixed;
+    inset: 0;
+    z-index: 20;
+    display: block;
+    background: color-mix(in srgb, var(--desk) 70%, transparent);
+    backdrop-filter: blur(10px) saturate(1.2);
+    -webkit-backdrop-filter: blur(10px) saturate(1.2);
+    animation: scrimIn 0.2s var(--ease);
+  }
+}
+
+@keyframes scrimIn {
+  from {
+    opacity: 0;
+  }
+}
+
+@media (max-width: 640px) {
+  .window,
+  .maximized {
+    left: 6px;
+    right: 6px;
+    border-radius: 14px;
+  }
+
+  /* Bigger targets for the traffic lights on touch. */
+  .lights {
+    gap: 10px;
+  }
+
+  .lights button {
+    width: 14px;
+    height: 14px;
+  }
+
+  .lights button::after {
+    content: "";
+    position: absolute;
+    inset: -8px -4px;
+  }
+
+  .lights button {
+    position: relative;
   }
 }

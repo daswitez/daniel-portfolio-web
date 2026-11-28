@@ -70,6 +70,7 @@ const OPEN_ALIASES: Record<string, OpenTarget> = {
   grazia: { kind: "safari", page: "grazia" },
   rlt: { kind: "safari", page: "rlt" },
   reallatinotalent: { kind: "safari", page: "rlt" },
+  landed: { kind: "safari", page: "landed" },
 };
 
 /* ---------- commands ---------- */

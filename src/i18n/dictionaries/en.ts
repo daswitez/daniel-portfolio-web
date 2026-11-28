@@ -187,6 +187,10 @@ export const en: Dictionary = {
     copyEmail: "Copy email",
     copied: "Copied!",
     askTerminal: "Ask my AI",
+    myRole: "My role",
+    standsOut: "What makes it different",
+    liveSite: "See it live",
+    designFile: "Design in Figma",
   },
   footer: "Designed and built by hand.",
   window: {

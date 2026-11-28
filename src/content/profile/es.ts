@@ -59,15 +59,27 @@ export const es: ProfileText = {
     },
   },
   projects: {
-    grazia: {
-      title: "Grazia AI",
+    landed: {
+      title: "Landed",
+      tagline: "Alquilar casa en otro país sin haberla pisado.",
       description:
-        "Plataforma de video con IA: anuncios, influencers de IA, UGC y videos inmobiliarios en minutos.",
-    },
-    rlt: {
-      title: "Real Latino Talent",
-      description:
-        "Sitio web para una agencia de staffing remoto LATAM que trabaja con empresas de EE. UU.",
+        "Pisos amueblados de 3 a 24 meses en Lisboa y Oporto para gente que se muda desde el extranjero: búsqueda, visita por video, documentos y contrato, todo online y en tres idiomas. El objetivo: pasar de 3 semanas a 5 días desde la primera consulta hasta el contrato.",
+      role: "Producto, UX/UI, design system y desarrollo full-stack, de principio a fin",
+      highlights: [
+        "Búsqueda por minutos reales en transporte público hasta tu oficina o universidad, con mapa y lista sincronizados.",
+        "Precio todo incluido y en tu moneda, con el tipo de cambio diario del BCE.",
+        "Visitas por video en tu zona horaria, sin reservas dobles: Postgres lo impide con una exclusion constraint.",
+        "Asistente con IA que usa datos reales: recomienda pisos que existen, consulta huecos libres y reserva la visita.",
+        "Seguridad de producto: API propia, cookies httpOnly, CSRF y Row Level Security en todas las tablas.",
+        "Demo pública con 5 roles, accesible (axe, WCAG 2.1 AA) y pensada primero para el móvil.",
+      ],
+      stats: [
+        { value: "31", label: "Páginas" },
+        { value: "44", label: "Endpoints de API" },
+        { value: "62", label: "Pantallas en Figma" },
+        { value: "3", label: "Idiomas" },
+      ],
+      note: "Proyecto de portafolio: las casas, personas y empresa de la demo son ficticias. Para probarla: Sign in → Try the demo.",
     },
   },
   stack: [

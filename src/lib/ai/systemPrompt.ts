@@ -22,7 +22,16 @@ export function buildSystemPrompt(locale: Locale): string {
     )
     .join("\n");
   const projects = profile.projects
-    .map((p) => `- ${p.title}: ${p.description}`)
+    .map((p) =>
+      [
+        `- ${p.title}: ${p.description}`,
+        p.role && `Role: ${p.role}.`,
+        p.highlights?.length && `Highlights: ${p.highlights.join(" ")}`,
+        p.tags.length > 0 && `Stack: ${p.tags.join(", ")}.`,
+      ]
+        .filter(Boolean)
+        .join(" "),
+    )
     .join("\n");
   const stack = profile.stack
     .map((g) => `- ${g.name}: ${g.items.join(", ")}`)

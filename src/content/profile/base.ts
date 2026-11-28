@@ -34,7 +34,7 @@ export const identity = {
 };
 
 export type ExperienceKey = "solvertic" | "grazia" | "freelance";
-export type ProjectKey = "landed";
+export type ProjectKey = "landed" | "tuvoz";
 
 type ExperienceBase = Omit<
   Experience,
@@ -96,6 +96,20 @@ export const PROJECTS: Array<
     figmaUrl:
       "https://www.figma.com/design/0mVdNCCrp1UMkcOu17RUjT/Landed",
   },
+  {
+    key: "tuvoz",
+    featured: true,
+    tags: [
+      "Next.js 16",
+      "TypeScript",
+      "Supabase",
+      "Gemini Live API",
+      "Web Audio",
+      "Tailwind CSS v4",
+    ],
+    color: "#0f172a",
+    url: "https://tu-voz-bay.vercel.app",
+  },
 ];
 
 type ProjectTextKey =
@@ -105,7 +119,8 @@ type ProjectTextKey =
   | "role"
   | "highlights"
   | "stats"
-  | "note";
+  | "note"
+  | "gallery";
 
 export type ProjectText = Pick<Project, "title" | "description"> &
   Partial<Pick<Project, Exclude<ProjectTextKey, "title" | "description">>>;

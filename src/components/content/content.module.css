@@ -121,6 +121,58 @@
   max-width: 760px;
 }
 
+.case + .case {
+  padding-top: 28px;
+  border-top: 0.5px solid var(--line);
+}
+
+/* Screenshot strip: swipe on touch, scroll on desktop, snaps to each shot. */
+.gallery {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  margin: 0;
+  padding: 0 0 8px;
+  list-style: none;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: thin;
+}
+
+.shot {
+  flex: none;
+  width: min(620px, 85%);
+  scroll-snap-align: start;
+}
+
+.shotMobile {
+  width: 200px;
+}
+
+.shot img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 12px;
+  background: var(--sunken);
+  box-shadow:
+    0 0 0 0.5px var(--line),
+    0 8px 24px rgba(0, 0, 0, 0.1);
+}
+
+.shotMobile img {
+  border-radius: 22px;
+}
+
+.shot span {
+  display: block;
+  margin-top: 8px;
+  color: var(--muted);
+  font-size: 12.5px;
+  text-wrap: pretty;
+}
+
 .caseHeader {
   margin: 22px 0 12px;
 }

@@ -76,6 +76,27 @@ export const en: ProfileText = {
       ],
       note: "Portfolio project: the homes, people and company in the demo are fictional. To try it: Sign in → Try the demo.",
     },
+    tuvoz: {
+      title: "Tu Voz",
+      tagline: "Sell by talking: inventory and sales with an AI agent.",
+      description:
+        "Inventory and sales management for small merchants, with an AI agent that understands both text and voice. Instead of hunting for products and filling in forms with a queue at the counter, the seller says “sold two 50 m rolls of fabric” and the agent drafts the sale for them to confirm.",
+      role: "Product, UX/UI and full-stack development, including the real-time voice AI",
+      highlights: [
+        "Real-time voice sales with Gemini Live: live transcription and spoken replies.",
+        "An agent with 12 tools over real data: it finds products even when the name is said wrong, records sales, stock arrivals and transfers between branches, voids sales, creates products and flags low stock.",
+        "Nothing is saved without confirmation: the agent proposes, the person confirms by voice or with a button.",
+        "Stock only changes through SQL functions that log every movement, so manual and voice sales share exactly the same logic.",
+        "Teams with roles (owner, admin, employee), branches and invites by code or QR, enforced with Row Level Security.",
+        "Products with QR codes, decimal units (metres, rolls, kg) and a dashboard with charts by period.",
+      ],
+      stats: [
+        { value: "12", label: "Agent tools" },
+        { value: "3", label: "Roles with permissions" },
+        { value: "2", label: "Modes: text and voice" },
+        { value: "6", label: "SQL migrations" },
+      ],
+    },
   },
   stack: [
     {

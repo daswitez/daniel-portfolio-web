@@ -6,7 +6,8 @@ import { TagList } from "@/components/ui/TagList";
 import { useWindowActions } from "@/components/windows/WindowManager";
 import { SAFARI_PAGES } from "@/config/safari";
 import { useI18n } from "@/i18n/I18nProvider";
-import type { Project } from "@/types/profile";
+import { cn } from "@/lib/text";
+import type { Project, ProjectShot } from "@/types/profile";
 import { SitePreviewCard } from "./SitePreviewCard";
 import styles from "./content.module.css";
 
@@ -41,8 +42,11 @@ function ProjectCase({ project }: { project: Project }) {
 
   return (
     <article className={styles.case}>
-      {project.previewPage && (
+      {project.previewPage ? (
         <SitePreviewCard page={project.previewPage} wide />
+      ) : (
+        project.gallery &&
+        project.gallery.length > 0 && <Gallery shots={project.gallery} />
       )}
 
       <header className={styles.caseHeader}>
@@ -112,6 +116,29 @@ function ProjectCase({ project }: { project: Project }) {
 
       {project.note && <p className={styles.caseNote}>{project.note}</p>}
     </article>
+  );
+}
+
+/** Swipeable strip of screenshots (native scroll-snap, no JS). */
+function Gallery({ shots }: { shots: readonly ProjectShot[] }) {
+  return (
+    <ul className={styles.gallery}>
+      {shots.map((shot) => (
+        <li
+          key={shot.src}
+          className={cn(styles.shot, shot.mobile && styles.shotMobile)}
+        >
+          <Image
+            src={shot.src}
+            width={shot.width}
+            height={shot.height}
+            alt={shot.caption}
+            sizes={shot.mobile ? "220px" : "(max-width: 640px) 85vw, 620px"}
+          />
+          <span>{shot.caption}</span>
+        </li>
+      ))}
+    </ul>
   );
 }
 

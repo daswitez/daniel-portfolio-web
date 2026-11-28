@@ -44,6 +44,11 @@ export interface Project {
   featured?: boolean;
   /** Design file, shown as a secondary link. */
   figmaUrl?: string;
+  /**
+   * Screenshots of the product, shown as a swipeable strip. Used for apps that
+   * sit behind a login, where a live embed would only show the sign-in screen.
+   */
+  gallery?: ProjectShot[];
   tags: string[];
   /** Cover background colour (shown while the screenshot loads, or alone). */
   color: string;
@@ -51,6 +56,16 @@ export interface Project {
   previewPage?: SafariPageId;
   /** External link, used when there's no Safari page. */
   url?: string;
+}
+
+export interface ProjectShot {
+  src: string;
+  width: number;
+  height: number;
+  /** What the screenshot shows (alt text and caption). */
+  caption: string;
+  /** Phone-sized capture (narrower slot in the strip). */
+  mobile?: boolean;
 }
 
 export interface StackGroup {

@@ -81,6 +81,27 @@ export const pt: ProfileText = {
       ],
       note: "Projeto de portfólio: as casas, pessoas e empresa da demo são fictícias. Para experimentar: Sign in → Try the demo.",
     },
+    tuvoz: {
+      title: "Tu Voz",
+      tagline: "Vender a falar: inventário e vendas com um agente de IA.",
+      description:
+        "Sistema de gestão de inventário e vendas para comerciantes, com um agente de IA que entende texto e voz. Em vez de procurar produtos e preencher formulários com o balcão cheio, o vendedor diz «vendi dois rolos de tecido de 50 metros» e o agente prepara a venda para ele confirmar.",
+      role: "Produto, UX/UI e desenvolvimento full-stack, incluindo a integração de IA por voz",
+      highlights: [
+        "Vendas por voz em tempo real com Gemini Live: transcrição ao vivo e resposta falada.",
+        "Um agente com 12 ferramentas sobre os dados reais: encontra produtos mesmo com o nome dito errado, regista vendas, entradas e transferências entre lojas, anula vendas, cria produtos e avisa do stock baixo.",
+        "Nada é guardado sem confirmação: o agente propõe e a pessoa confirma por voz ou com um botão.",
+        "O stock só muda através de funções SQL que registam cada movimento, por isso vendas manuais e por voz usam exatamente a mesma lógica.",
+        "Equipas com cargos (dono, administrador, funcionário), lojas e convites por código ou QR, protegidos com Row Level Security.",
+        "Produtos com código QR, unidades decimais (metros, rolos, kg) e um painel com gráficos por período.",
+      ],
+      stats: [
+        { value: "12", label: "Ferramentas do agente" },
+        { value: "3", label: "Cargos com permissões" },
+        { value: "2", label: "Modos: texto e voz" },
+        { value: "6", label: "Migrações SQL" },
+      ],
+    },
   },
   stack: [
     {
